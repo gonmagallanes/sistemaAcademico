@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SistemaAcademico.Data;
 using SistemaAcademico.Helpers;
 using SistemaAcademico.Models;
+using SistemaAcademico.Servicios;
 
 namespace SistemaAcademico.Pages
 {
@@ -33,17 +34,8 @@ namespace SistemaAcademico.Pages
                 return Page();
             }
 
-            foreach(var carrera in DatosCompartidos.ListCarrera)
-            {
-                if(carrera.Id == oCarrera.Id)
-                {
-                    carrera.Nombre = oCarrera.Nombre;
-                    carrera.Modalidad = oCarrera.Modalidad;
-                    carrera.DuracionAnios = oCarrera.DuracionAnios;
-                    carrera.TituloOtorgado = oCarrera.TituloOtorgado;
-                    break;
-                }
-            }
+            ServicioCarrera.EditarCarrera(oCarrera);
+
             return RedirectToPage("TablaCarreras");
         }
             

@@ -1,16 +1,9 @@
-﻿[
+[
   {
     "Id": 1,
-    "Nombre": "Ingeniería en Sistemas",
-    "DuracionAnios": 5,
-    "TituloOtorgado": "Ingeniero/a",
-    "Modalidad": "Presencial"
-  },
-  {
-    "Id": 2,
-    "Nombre": "Abogacía",
-    "DuracionAnios": 5,
-    "TituloOtorgado": "Abogado/a",
+    "Nombre": "Analista",
+    "DuracionAnios": 3,
+    "TituloOtorgado": "Analista Sistemas",
     "Modalidad": "Hibrida"
   }
 ]

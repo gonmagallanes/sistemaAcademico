@@ -1,4 +1,5 @@
-﻿using SistemaAcademico.Models;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using SistemaAcademico.Models;
 using System.Text.Json;
 
 namespace SistemaAcademico.Servicios
@@ -16,7 +17,7 @@ namespace SistemaAcademico.Servicios
             return "[]";
         }
 
-        public static List<Carrera> ObtenerCarrera()
+        public static List<Carrera> ObtenerCarreras()
         {
             string json = LeerTextoDelArchivo();
 
@@ -46,10 +47,64 @@ namespace SistemaAcademico.Servicios
 
         public static void AgregarCarrera(Carrera nuevaCarrera)
         {
-            var carreras = ObtenerCarrera();
+            var carreras = ObtenerCarreras();
             nuevaCarrera.Id = ObtenerNuevoId(carreras);
             carreras.Add(nuevaCarrera);
             GuardarCarreras(carreras);
+        }
+
+        public static Carrera? BuscarPorId(int id)
+        {
+            var lista = ObtenerCarreras();
+            foreach (var carrera in lista)
+            {
+                if (carrera.Id == id)
+                {
+                    return carrera;
+
+                }
+            }
+            return null;
+        }
+
+        public static void EliminarPorId(int id)
+        {
+            var lista = ObtenerCarreras();
+            Carrera? carreraAEliminar = null;
+
+            foreach (var carrera in lista)
+            {
+                if(carrera.Id == id)
+                {
+                    carreraAEliminar = carrera;
+                    break;
+                }
+            }
+
+            if (carreraAEliminar != null)
+            {
+                lista.Remove(carreraAEliminar);
+                GuardarCarreras(lista);
+            }
+        }
+
+        public static void EditarCarrera(Carrera carreraEditada)
+        {
+            var lista = ObtenerCarreras();
+
+            foreach( var c in lista)
+            {
+                if(c.Id == carreraEditada.Id)
+                {
+                    c.Nombre = carreraEditada.Nombre;
+                    c.Modalidad = carreraEditada.Modalidad;
+                    c.DuracionAnios = carreraEditada.DuracionAnios;
+                    c.TituloOtorgado= carreraEditada.TituloOtorgado;
+                    break;
+                }
+            }
+
+            GuardarCarreras(lista);
         }
     }
 }

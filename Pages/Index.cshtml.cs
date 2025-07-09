@@ -19,7 +19,7 @@ namespace SistemaAcademico.Pages
 
         public void OnGet()
         {
-            oCarreras = ServicioCarrera.ObtenerCarrera();
+            oCarreras = ServicioCarrera.ObtenerCarreras();
         }
     }
 }

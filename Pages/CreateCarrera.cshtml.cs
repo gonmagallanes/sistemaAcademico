@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using SistemaAcademico.Data;
 using SistemaAcademico.Helpers;
 using SistemaAcademico.Models;
+using SistemaAcademico.Servicios;
 
 
 namespace SistemaAcademico.Pages
@@ -11,6 +12,7 @@ namespace SistemaAcademico.Pages
     {
         [BindProperty]
         public Carrera oCarrera { get; set; }
+        private readonly ServicioCarrera oServicioCarrera;
         public List<string> Modalidades { get; set; } = new();
         public void OnGet(){
             Modalidades = OpcionesModalidad.Lista;
