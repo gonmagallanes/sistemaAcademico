@@ -35,7 +35,7 @@ namespace SistemaAcademico.Pages
                     alumno.Apellido = oAlumno.Apellido;
                     alumno.Dni = oAlumno.Dni;
                     alumno.Email = oAlumno.Email;
-                    alumno.FechaDeNacimiento = oAlumno.FechaDeNacimiento;
+                    alumno.FechaNacimiento = oAlumno.FechaNacimiento;
 
                     break;
                 }
