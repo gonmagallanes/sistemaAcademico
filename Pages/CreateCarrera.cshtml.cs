@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SistemaAcademico.Data;
+using SistemaAcademico.Helpers;
 using SistemaAcademico.Models;
 
 
@@ -10,11 +11,16 @@ namespace SistemaAcademico.Pages
     {
         [BindProperty]
         public Carrera oCarrera { get; set; }
-        public void OnGet(){}
+        public List<string> Modalidades { get; set; } = new();
+        public void OnGet(){
+            Modalidades = OpcionesModalidad.Lista;
+        }
 
         public static int ultimoId = 0;
 
         public IActionResult OnPost() {
+
+            Modalidades = OpcionesModalidad.Lista;
 
             if (!ModelState.IsValid)
             {
