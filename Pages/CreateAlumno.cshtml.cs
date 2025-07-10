@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SistemaAcademico.AccesoDatos;
 using SistemaAcademico.Data;
 using SistemaAcademico.Models;
+using SistemaAcademico.Repositorios;
+using SistemaAcademico.Servicios;
 
 namespace SistemaAcademico.Pages
 {
@@ -9,21 +12,25 @@ namespace SistemaAcademico.Pages
     {
         [BindProperty]
         public Alumno oAlumno { get; set; }
+        private readonly ServicioAlumno oServicioAlumno;
+        public CreateAlumnoModel()
+        {
+            IAccesoDatos<Alumno> acceso = new AccesoDatos<Alumno>("Alumnos");
+            IRepository<Alumno> repo = new RepositorioCrudJson<Alumno>(acceso);
+            oServicioAlumno = new ServicioAlumno(repo);
+        }
         public void OnGet()
         {
         }
 
-        public static int ultimoAlumnoId = 0;
-
         public IActionResult OnPost()
         {
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            oAlumno.Id = DatosCompartidos.ObtenerNuevoAlumnoID();
-            DatosCompartidos.ListAlumno.Add(oAlumno);
+            oServicioAlumno.Agregar(oAlumno);
+
             return RedirectToPage("TablaAlumnos");
         }
     }

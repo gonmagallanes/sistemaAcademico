@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SistemaAcademico.AccesoDatos;
 using SistemaAcademico.Data;
 using SistemaAcademico.Models;
+using SistemaAcademico.Repositorios;
+using SistemaAcademico.Servicios;
 
 namespace SistemaAcademico.Pages
 {
@@ -9,15 +12,20 @@ namespace SistemaAcademico.Pages
     {
         [BindProperty]
         public Alumno oAlumno { get; set; }
+        private readonly ServicioAlumno oServicioAlumno;
+        public EditAlumnoModel()
+        {
+            IAccesoDatos<Alumno> acceso = new AccesoDatos<Alumno>("Alumnos");
+            IRepository<Alumno> repo = new RepositorioCrudJson<Alumno>(acceso);
+            oServicioAlumno = new ServicioAlumno(repo);
+        }
         public void OnGet(int id)
         {
-            foreach (var alumno in DatosCompartidos.ListAlumno)
+            Alumno? alumno = oServicioAlumno.BuscarPorId(id);
+
+            if (alumno != null)
             {
-                if (alumno.Id == id)
-                {
-                    oAlumno = alumno;
-                    break;
-                }
+                oAlumno = alumno;
             }
         }
         public IActionResult OnPost()
@@ -27,19 +35,8 @@ namespace SistemaAcademico.Pages
                 return Page();
             }
 
-            foreach (var alumno in DatosCompartidos.ListAlumno)
-            {
-                if (alumno.Id == oAlumno.Id)
-                {
-                    alumno.Nombre = oAlumno.Nombre;
-                    alumno.Apellido = oAlumno.Apellido;
-                    alumno.Dni = oAlumno.Dni;
-                    alumno.Email = oAlumno.Email;
-                    alumno.FechaNacimiento = oAlumno.FechaNacimiento;
+            oServicioAlumno.Editar(oAlumno);
 
-                    break;
-                }
-            }
             return RedirectToPage("TablaAlumnos");
         }
     }

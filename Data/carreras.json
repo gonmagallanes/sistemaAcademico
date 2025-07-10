@@ -1,9 +1,1 @@
-[
-  {
-    "Id": 1,
-    "Nombre": "Analista",
-    "DuracionAnios": 3,
-    "TituloOtorgado": "Analista Sistemas",
-    "Modalidad": "Hibrida"
-  }
-]
+[{"Id":1,"Nombre":"Ingenier\u00EDa en Sistemas","DuracionAnios":5,"TituloOtorgado":"Ingeniero/a","Modalidad":"Presencial"},{"Id":2,"Nombre":"Abogac\u00EDa","DuracionAnios":5,"TituloOtorgado":"Abogado/a","Modalidad":"Hibrida"},{"Id":3,"Nombre":"Doctorado","DuracionAnios":6,"TituloOtorgado":"Cirujano","Modalidad":"Presencial"}]

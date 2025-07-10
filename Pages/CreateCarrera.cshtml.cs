@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SistemaAcademico.AccesoDatos;
 using SistemaAcademico.Data;
 using SistemaAcademico.Helpers;
 using SistemaAcademico.Models;
+using SistemaAcademico.Repositorios;
+using SistemaAcademico.Services;
 using SistemaAcademico.Servicios;
 
 
@@ -12,16 +15,22 @@ namespace SistemaAcademico.Pages
     {
         [BindProperty]
         public Carrera oCarrera { get; set; }
+        public List<string> Modalidades { get; set; } = new List<string>();
         private readonly ServicioCarrera oServicioCarrera;
-        public List<string> Modalidades { get; set; } = new();
-        public void OnGet(){
+
+        public CreateCarreraModel()
+        {
+            IAccesoDatos<Carrera> acceso = new AccesoDatos<Carrera>("Carreras");
+            IRepository<Carrera> repo = new RepositorioCrudJson<Carrera>(acceso);
+            oServicioCarrera = new ServicioCarrera(repo);
+        }
+        public void OnGet()
+        {
             Modalidades = OpcionesModalidad.Lista;
         }
 
-        public static int ultimoId = 0;
-
-        public IActionResult OnPost() {
-
+        public IActionResult OnPost()
+        {
             Modalidades = OpcionesModalidad.Lista;
 
             if (!ModelState.IsValid)
@@ -29,8 +38,8 @@ namespace SistemaAcademico.Pages
                 return Page();
             }
 
-            oCarrera.Id = DatosCompartidos.ObtenerNuevoId();
-            DatosCompartidos.ListCarrera.Add(oCarrera);
+            oServicioCarrera.Agregar(oCarrera);
+
             return RedirectToPage("TablaCarreras");
         }
     }

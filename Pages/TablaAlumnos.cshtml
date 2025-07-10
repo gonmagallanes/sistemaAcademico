@@ -4,7 +4,7 @@
 }
 <a asp-page="CreateAlumno" class="btn btn-success mb-3">Agregar Alumno</a>
 
-@if (Model.ListaMostrarAlumnos.Count == 0)
+@if (Model.listaAlumnosMotrar.Count == 0)
 {
     <p> No hay alumnos cargadas </p>
 }
@@ -24,7 +24,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var alumno in Model.ListaMostrarAlumnos)
+            @foreach (var alumno in Model.listaAlumnosMotrar)
             {
                 <tr>
                     <td>@alumno.Id</td>

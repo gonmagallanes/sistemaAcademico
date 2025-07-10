@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SistemaAcademico.Models;
+using SistemaAcademico.Services;
 using SistemaAcademico.Servicios;
 
 namespace SistemaAcademico.Pages
@@ -19,7 +20,6 @@ namespace SistemaAcademico.Pages
 
         public void OnGet()
         {
-            oCarreras = ServicioCarrera.ObtenerCarreras();
         }
     }
 }

@@ -1,110 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using SistemaAcademico.Models;
-using System.Text.Json;
+﻿using SistemaAcademico.Models;
+using SistemaAcademico.Repositorios;
 
-namespace SistemaAcademico.Servicios
+namespace SistemaAcademico.Services
 {
     public class ServicioCarrera
     {
-        private static string ruta = "Data/carreras.json";
-
-        public static string LeerTextoDelArchivo()
+        private readonly IRepository<Carrera> _repo;
+        public ServicioCarrera(IRepository<Carrera> repo)
         {
-            if (File.Exists(ruta))
-            {
-                return File.ReadAllText(ruta);
-            }
-            return "[]";
+            _repo = repo;
         }
-
-        public static List<Carrera> ObtenerCarreras()
+        public List<Carrera> ObtenerTodos()
         {
-            string json = LeerTextoDelArchivo();
-
-            var lista = JsonSerializer.Deserialize<List<Carrera>>(json);
-            return lista ?? new List<Carrera>();
+            return _repo.ObtenerTodos();
         }
-
-        public static int ObtenerNuevoId(List<Carrera> carreras) 
+        public Carrera? BuscarPorId(int id)
         {
-            int maxId = 0;
-            foreach (var carrera in carreras)
-            {
-                if(carrera.Id > maxId)
-                {
-                    maxId = carrera.Id;
-                }
-            }
-
-            return maxId + 1;
+            return _repo.BuscarPorId(id);
         }
-
-        public static void GuardarCarreras(List<Carrera> carreras)
+        public void Editar(Carrera carrera)
         {
-            string textoJson = JsonSerializer.Serialize(carreras);
-            File.WriteAllText(ruta, textoJson);
+            _repo.Editar(carrera);
         }
-
-        public static void AgregarCarrera(Carrera nuevaCarrera)
+        public void EliminarPorId(int id)
         {
-            var carreras = ObtenerCarreras();
-            nuevaCarrera.Id = ObtenerNuevoId(carreras);
-            carreras.Add(nuevaCarrera);
-            GuardarCarreras(carreras);
+            _repo.EliminarPorId(id);
         }
-
-        public static Carrera? BuscarPorId(int id)
+        public void Agregar(Carrera carrera)
         {
-            var lista = ObtenerCarreras();
-            foreach (var carrera in lista)
-            {
-                if (carrera.Id == id)
-                {
-                    return carrera;
-
-                }
-            }
-            return null;
-        }
-
-        public static void EliminarPorId(int id)
-        {
-            var lista = ObtenerCarreras();
-            Carrera? carreraAEliminar = null;
-
-            foreach (var carrera in lista)
-            {
-                if(carrera.Id == id)
-                {
-                    carreraAEliminar = carrera;
-                    break;
-                }
-            }
-
-            if (carreraAEliminar != null)
-            {
-                lista.Remove(carreraAEliminar);
-                GuardarCarreras(lista);
-            }
-        }
-
-        public static void EditarCarrera(Carrera carreraEditada)
-        {
-            var lista = ObtenerCarreras();
-
-            foreach( var c in lista)
-            {
-                if(c.Id == carreraEditada.Id)
-                {
-                    c.Nombre = carreraEditada.Nombre;
-                    c.Modalidad = carreraEditada.Modalidad;
-                    c.DuracionAnios = carreraEditada.DuracionAnios;
-                    c.TituloOtorgado= carreraEditada.TituloOtorgado;
-                    break;
-                }
-            }
-
-            GuardarCarreras(lista);
+            _repo.Agregar(carrera);
         }
     }
 }
