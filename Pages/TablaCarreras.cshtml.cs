@@ -11,7 +11,7 @@ namespace SistemaAcademico.Pages
 {
     public class TablaCarrerasModel : PageModel
     {
-        public List<Carrera> ListaMostrarCarrera;
+        public List<Carrera> ListaCarrera;
         private readonly ServicioCarrera oServicioCarrera;
         public TablaCarrerasModel()
         {
@@ -21,7 +21,7 @@ namespace SistemaAcademico.Pages
         }
         public void OnGet()
         {
-            ListaMostrarCarrera = oServicioCarrera.ObtenerTodos();
+            ListaCarrera = oServicioCarrera.ObtenerTodos();
         }
 
     }
