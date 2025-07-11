@@ -5,18 +5,18 @@ namespace SistemaAcademico.Repositorios
 {
     public class RepositorioCrudJson<T> : IRepository<T> where T : class
     {
-        private readonly IAccesoDatos<T> _accesoDatos;
+        private readonly IAccesoDatos<T> AccesoDatos;
         public RepositorioCrudJson(IAccesoDatos<T> acceso)
         {
-            _accesoDatos = acceso;
+            AccesoDatos = acceso;
         }
         public List<T> ObtenerTodos()
         {
-            return _accesoDatos.Leer();
+            return AccesoDatos.Leer();
         }
         public void Guardar(List<T> lista)
         {
-            _accesoDatos.Guardar(lista);
+            AccesoDatos.Guardar(lista);
         }
         public int ObtenerNuevoId(List<T> lista)
         {
